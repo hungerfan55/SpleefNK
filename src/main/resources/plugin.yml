@@ -1,0 +1,10 @@
+name: SpleefNK
+main: spleefnk.SpleefPlugin
+version: 1.0
+api: ["1.0.8"]
+author: Hungerfan55
+permissions:
+  spleefNK.admin:
+    default: op
+  spleefNK.user:
+    default: not op
