@@ -1,8 +1,13 @@
 package spleefnk.managers;
 
 import cn.nukkit.Player;
+import cn.nukkit.form.element.ElementButton;
+import cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.element.ElementInput;
 import cn.nukkit.form.window.FormWindowCustom;
+import cn.nukkit.form.window.FormWindowSimple;
+import spleefnk.arena.Arena;
+import spleefnk.arena.GameState;
 
 public class FormManager {
 
@@ -20,7 +25,14 @@ public class FormManager {
     }
 
     public void sendJoinForm(Player player) {
-        //TODO: when they dont specify an arena in the /spleef join command
+        FormWindowSimple fw = new FormWindowSimple("Join arena", "arenas");
+        for (Arena arena : gameManager.getArenaManager().getArenas()) {
+            if (!(arena.getGameState() == GameState.RESTARTING) || !(arena.getGameState() == GameState.ACTIVE) || !(arena.getPlayers().size() >= arena.getMaxPlayers())) {
+                if (gameManager.getArenasConfig().getBoolean(arena.getName() + ".enabled")){
+                    fw.addButton(new ElementButton("§a" + arena.getName(), new ElementButtonImageData("path", "textures/items/snowball")));
+                }
+            }
+        }
+        player.showFormWindow(fw);
     }
-
 }

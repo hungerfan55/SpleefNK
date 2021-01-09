@@ -50,6 +50,7 @@ public class SetupWizardManager implements Listener {
         String name = arena.getName();
         gameManager.getArenasConfig().set(name + ".minPlayers", minPlayers);
         gameManager.getArenasConfig().set(name + ".maxPlayers", maxPlayers);
+        player.sendMessage("§aMinimum and maximum players have been set");
     }
 
     public void giveItems(Player player) {

@@ -54,7 +54,6 @@ public class Arena {
         this.enabled = cfg.getBoolean(name + ".enabled");
         this.bowSpleefEnabled = cfg.getBoolean(name + ".bowSpleef");
         this.name = name;
-        //TODO: make these config options with a formGUI and items to set them in the SetupWizardManager
         this.minPlayers = cfg.getInt(name + ".minPlayers");
         this.maxPlayers = cfg.getInt(name + ".maxPlayers");
     }
@@ -92,7 +91,7 @@ public class Arena {
             return;
         }
 
-        if (players.size() >= maxPlayers) {
+        if (players.size() >= getMaxPlayers()) {
             player.sendMessage("§4This arena is full!");
             return;
         }
@@ -173,11 +172,11 @@ public class Arena {
     }
 
     public int getMinPlayers() {
-        return minPlayers;
+        return cfg.getInt(this.getName() + ".minPlayers");
     }
 
     public int getMaxPlayers() {
-        return maxPlayers;
+        return cfg.getInt(name + ".maxPlayers");
     }
 
     public GameState getGameState() {

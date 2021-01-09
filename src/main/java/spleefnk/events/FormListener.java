@@ -5,7 +5,9 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.window.FormWindowCustom;
+import cn.nukkit.form.window.FormWindowSimple;
 import cn.nukkit.utils.Config;
+import spleefnk.arena.Arena;
 import spleefnk.managers.GameManager;
 
 public class FormListener implements Listener {
@@ -24,6 +26,7 @@ public class FormListener implements Listener {
 
         if (event.getWindow() instanceof FormWindowCustom) {
             FormWindowCustom fw = (FormWindowCustom) event.getWindow();
+            if (!(fw.getTitle().equals("Set min and max players"))) return;
             if (fw.getResponse().getInputResponse(0) == null) {
                 gameManager.getSetupWizardManager().endWizard(event.getPlayer());
                 event.getPlayer().sendMessage("§4Arena creation canceled");
@@ -40,8 +43,15 @@ public class FormListener implements Listener {
             } else {
                 gameManager.getSetupWizardManager().writePlayers(minPlayers, maxPlayers, event.getPlayer());
             }
+        } else if (event.getWindow() instanceof FormWindowSimple) {
+            FormWindowSimple fw = (FormWindowSimple) event.getWindow();
+            if (!fw.getTitle().equals("Join arena")) return;
+            if (fw.getResponse() == null) return;
+            StringBuilder sb = new StringBuilder(fw.getResponse().getClickedButton().getText());
+            Arena arena = gameManager.getArenaManager().getArenaByName(sb.delete(0, 2).toString());
+
+            arena.addPlayer(event.getPlayer());
         }
 
     }
-
 }

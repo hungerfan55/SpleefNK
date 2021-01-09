@@ -52,8 +52,7 @@ public class SpleefCommand extends Command {
                     break;
                 }
                 if (args.length == 1) {
-                    player.sendMessage("Please do /spleef list for a list of all arenas");
-                    player.sendMessage("Please do /spleef join <arena name> to join a arena");
+                    gameManager.getFormManager().sendJoinForm(player);
                     break;
                 } else if (args.length > 2) {
                     player.sendMessage("Please do /spleef list for a list of all arenas");
@@ -85,6 +84,10 @@ public class SpleefCommand extends Command {
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    if (arena == null){
+                        player.sendMessage("That arena doesn't exist");
+                        break;
+                    }
                     if (gameManager.getArenasConfig().getBoolean(arenaName + ".bowSpleef")) {
                         arena.setBowSpleefEnabled(false);
                         player.sendMessage("Bow spleef is now disabled for arena " + arenaName);
@@ -111,6 +114,10 @@ public class SpleefCommand extends Command {
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    if (arena == null){
+                        player.sendMessage("That arena doesn't exist");
+                        break;
+                    }
                     player.sendMessage("Arena enabled");
                     arena.setEnabled(true);
                     break;
@@ -131,6 +138,10 @@ public class SpleefCommand extends Command {
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    if (arena == null){
+                        player.sendMessage("That arena doesn't exist");
+                        break;
+                    }
                     player.sendMessage("Arena disabled");
                     arena.setEnabled(false);
                     break;
@@ -168,6 +179,10 @@ public class SpleefCommand extends Command {
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    if (arena == null){
+                        player.sendMessage("That arena doesn't exist");
+                        break;
+                    }
                     if (arena.isEnabled()) {
                         player.sendMessage("Please disable the arena first with /spleef disable " + arenaName);
                         break;
@@ -190,6 +205,10 @@ public class SpleefCommand extends Command {
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    if (arena == null){
+                        player.sendMessage("That arena doesn't exist");
+                        break;
+                    }
                     gameManager.getSetupWizardManager().startWizard(player, arena, true);
                     break;
                 }
