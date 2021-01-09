@@ -45,5 +45,6 @@ public class SpleefPlugin extends PluginBase {
         pm.registerEvents(new ItemDropEvent(gameManager.getArenaManager()), this);
         pm.registerEvents(new PlayerDamageEvent(gameManager.getArenaManager()), this);
         pm.registerEvents(new PlayerInteractEvent(gameManager.getArenaManager()), this);
+        pm.registerEvents(new ProjectileHitEvent(gameManager.getArenaManager()), this);
     }
 }

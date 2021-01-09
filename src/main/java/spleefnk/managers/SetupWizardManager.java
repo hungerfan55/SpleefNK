@@ -80,17 +80,17 @@ public class SetupWizardManager implements Listener {
         }
 
         Arena arena = inWizard.get(player);
-        player.sendMessage(arena.getName());
 
         String itemName = event.getItem().getCustomName();
 
         if (itemName.equalsIgnoreCase(SET_SPAWN_LOCATION_ITEM_NAME)) {
 
-            player.sendMessage("§2The spawn has been set");
+            player.sendMessage("§2The first spawn has been set");
             event.setCancelled(true);
             Location location = player.getLocation();
             String arenaName = arena.getName();
             gameManager.getArenasConfig().set(arenaName + ".enabled", false);
+            gameManager.getArenasConfig().set(arenaName + ".bowSpleef", false);
             gameManager.getArenasConfig().set(arenaName + ".spawnLocation.x", location.getX());
             gameManager.getArenasConfig().set(arenaName + ".spawnLocation.y", location.getY());
             gameManager.getArenasConfig().set(arenaName + ".spawnLocation.z", location.getZ());

@@ -23,11 +23,12 @@ public class Arena {
     private List<Player> players = new ArrayList<>();
     private List<Location> brokenBlocks = new ArrayList<>();
 
-    private Location spawnLocation;
+    private Location location;
 
     private String name;
 
     private boolean enabled;
+    private boolean bowSpleefEnabled;
 
     private int minPlayers;
     private int maxPlayers;
@@ -49,10 +50,10 @@ public class Arena {
         cfg = gameManager.getArenasConfig();
         gameManager.getArenasConfig();
 
-        Location location = new Location(cfg.getDouble(name + ".spawnLocation.x"), cfg.getDouble(name + ".spawnLocation.y"), cfg.getDouble(name + ".spawnLocation.z"), cfg.getDouble(name + ".spawnLocation.yaw"), cfg.getDouble(name + ".spawnLocation.pitch"), gameManager.getPlugin().getServer().getLevelByName(cfg.getString(name + ".spawnLocation.worldName")));
+        location = new Location(cfg.getDouble(name + ".spawnLocation.x"), cfg.getDouble(name + ".spawnLocation.y"), cfg.getDouble(name + ".spawnLocation.z"), cfg.getDouble(name + ".spawnLocation.yaw"), cfg.getDouble(name + ".spawnLocation.pitch"), gameManager.getPlugin().getServer().getLevelByName(cfg.getString(name + ".spawnLocation.worldName")));
         this.enabled = cfg.getBoolean(name + ".enabled");
+        this.bowSpleefEnabled = cfg.getBoolean(name + ".bowSpleef");
         this.name = name;
-        this.spawnLocation = location;
         //TODO: make these config options with a formGUI and items to set them in the SetupWizardManager
         this.minPlayers = 2;
         this.maxPlayers = 8;
@@ -70,8 +71,13 @@ public class Arena {
         return cfg.getBoolean(name + "enabled");
     }
 
-    public void setEnabled(boolean val, Arena arena) {
-        cfg.set(arena.getName() + ".enabled", val);
+    public void setEnabled(boolean val) {
+        cfg.set(this.getName() + ".enabled", val);
+        gameManager.saveConfig();
+    }
+
+    public void setBowSpleefEnabled(boolean val) {
+        cfg.set(this.getName() + ".bowSpleef", val);
         gameManager.saveConfig();
     }
 
@@ -101,12 +107,28 @@ public class Arena {
         player.getFoodData().setLevel(player.getFoodData().getMaxLevel());
         this.sendMessage(player.getName() + "§6 has joined!");
         player.teleport(getSpawnLocation());
+        giveItems(player);
+        checkLobby();
+    }
+
+    public void giveItems(Player player) {
         PlayerInventory pI = player.getInventory();
         pI.clearAll();
-        Item item = Item.get(ItemID.DIAMOND_SHOVEL);
-        item.addEnchantment(Enchantment.get(Enchantment.ID_EFFICIENCY).setLevel(5));
-        pI.addItem(item);
-        checkLobby();
+        if (!isBowSpleef()){
+            Item item = Item.get(ItemID.DIAMOND_SHOVEL);
+            item.addEnchantment(Enchantment.get(Enchantment.ID_EFFICIENCY).setLevel(5));
+            pI.addItem(item);
+        } else {
+            Item item = Item.get(ItemID.BOW);
+            Item item1 = Item.get(ItemID.ARROW);
+            Item item2 = Item.get(ItemID.SNOWBALL);
+            item1.setCount(128);
+            item2.setCount(128);
+
+            pI.addItem(item);
+            pI.addItem(item1);
+            pI.addItem(item2);
+        }
     }
 
     private void checkLobby() {
@@ -143,19 +165,11 @@ public class Arena {
 
 
     public Location getSpawnLocation() {
-        return spawnLocation;
-    }
-
-    public void setSpawnLocation(Location spawnLocation) {
-        this.spawnLocation = spawnLocation;
+        return location;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getMinPlayers() {
@@ -205,5 +219,13 @@ public class Arena {
             player.sendMessage(msg);
         }
 
+    }
+
+    public void setSpawnLocation(Location location) {
+        this.location = location;
+    }
+
+    public boolean isBowSpleef() {
+        return cfg.getBoolean(name + ".bowSpleef");
     }
 }

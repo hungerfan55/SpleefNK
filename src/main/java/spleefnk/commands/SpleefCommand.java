@@ -69,6 +69,32 @@ public class SpleefCommand extends Command {
                     arena.addPlayer(player);
                     break;
                 }
+            case "bowspleef":
+                if (!player.hasPermission("spleefNK.admin")) {
+                    player.sendMessage("§cYou dont have permission to this command");
+                    break;
+                }
+                if (args.length == 1) {
+                    player.sendMessage("Please do /spleef list for a list of all arenas");
+                    player.sendMessage("Please do /spleef bowspleef <arena name> to enable bowspleef for a arena");
+                    break;
+                } else if (args.length > 2) {
+                    player.sendMessage("Please do /spleef list for a list of all arenas");
+                    player.sendMessage("Please do /spleef bowspleef <arena name> to join a arena");
+                    break;
+                } else {
+                    String arenaName = args[1];
+                    Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    if (gameManager.getArenasConfig().getBoolean(arenaName + ".bowSpleef")) {
+                        arena.setBowSpleefEnabled(false);
+                        player.sendMessage("Bow spleef is now disabled for arena " + arenaName);
+                        break;
+                    }
+                    arena.setBowSpleefEnabled(true);
+                    player.sendMessage("Bow spleef is now enabled for arena : " + arenaName);
+                    break;
+                }
+
             case "enable":
                 if (!player.hasPermission("spleefNK.admin")) {
                     player.sendMessage("§cYou dont have permission to this command");
@@ -86,7 +112,7 @@ public class SpleefCommand extends Command {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     player.sendMessage("Arena enabled");
-                    arena.setEnabled(true, arena);
+                    arena.setEnabled(true);
                     break;
                 }
             case "disable":
@@ -106,7 +132,7 @@ public class SpleefCommand extends Command {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     player.sendMessage("Arena disabled");
-                    arena.setEnabled(false, arena);
+                    arena.setEnabled(false);
                     break;
                 }
             case "list":
@@ -133,6 +159,6 @@ public class SpleefCommand extends Command {
     }
 
     private void sendHelp(Player player) {
-        player.sendMessage("§2----Spleef-----\n/spleef list : List all arenas\n/spleef enable/disable : Disable or enable an arena\n/spleef join : join an arena\n/spleef create : create an arena");
+        player.sendMessage("§2----Spleef-----\n/spleef list : List all arenas\n/spleef enable/disable : Disable or enable an arena\n/spleef join : join an arena\n/spleef create : create an arena\n/spleef bowspleef : Do bow spleef on or off for a arena");
     }
 }
