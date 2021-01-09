@@ -21,6 +21,8 @@ public class SetupWizardManager implements Listener {
 
     private Map<Player, Arena> inWizard = new HashMap<>();
 
+    private boolean edit;
+
     private final String SET_SPAWN_LOCATION_ITEM_NAME = "§aSet the spawn location §7(long / right click)";
     private final String SAVE_ARENA_ITEM_NAME = "§cSave arena";
     private final String CANCEL_SETUP_WIZARD_ITEM_NAME = "§cCancel arena creation";
@@ -30,7 +32,8 @@ public class SetupWizardManager implements Listener {
         this.gameManager = gameManager;
     }
 
-    public void startWizard(Player player, Arena arena) {
+    public void startWizard(Player player, Arena arena, boolean edit) {
+        this.edit = edit;
         inWizard.put(player, arena);
 
         if (arena == null) {
@@ -39,6 +42,14 @@ public class SetupWizardManager implements Listener {
         }
         player.setGamemode(1);
         giveItems(player);
+        gameManager.getFormManager().sendWizardForm(player);
+    }
+
+    public void writePlayers(int minPlayers, int maxPlayers, Player player) {
+        Arena arena = inWizard.get(player);
+        String name = arena.getName();
+        gameManager.getArenasConfig().set(name + ".minPlayers", minPlayers);
+        gameManager.getArenasConfig().set(name + ".maxPlayers", maxPlayers);
     }
 
     public void giveItems(Player player) {
@@ -114,6 +125,12 @@ public class SetupWizardManager implements Listener {
             arena.setSpawnLocation(location);
             return;
         } else if (itemName.equalsIgnoreCase(SAVE_ARENA_ITEM_NAME)) {
+            if (edit) {
+                player.sendMessage("§2The arena has been edited...");
+                event.setCancelled(true);
+                endWizard(player);
+                return;
+            }
             player.sendMessage("§2The arena has been created...");
             event.setCancelled(true);
             endWizard(player);

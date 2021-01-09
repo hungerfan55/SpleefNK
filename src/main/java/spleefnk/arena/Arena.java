@@ -55,8 +55,8 @@ public class Arena {
         this.bowSpleefEnabled = cfg.getBoolean(name + ".bowSpleef");
         this.name = name;
         //TODO: make these config options with a formGUI and items to set them in the SetupWizardManager
-        this.minPlayers = 2;
-        this.maxPlayers = 8;
+        this.minPlayers = cfg.getInt(name + ".minPlayers");
+        this.maxPlayers = cfg.getInt(name + ".maxPlayers");
     }
 
     public LobbyCountDownTask getLobbyCountDownTask() {

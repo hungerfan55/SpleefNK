@@ -10,6 +10,7 @@ public class GameManager {
     private SpleefPlugin plugin;
     private ArenaManager arenaManager;
     private SetupWizardManager setupWizardManager;
+    private FormManager formManager;
 
     private  File arenasFile;
     private Config arenasConfig;
@@ -22,10 +23,15 @@ public class GameManager {
             this.arenasFile = new File(plugin.getDataFolder(), "arenas.yml");
         }
         this.arenasConfig = new Config(arenasFile, 2);
+        this.formManager = new FormManager(this);
     }
 
     public void saveConfig() {
         this.arenasConfig.save(arenasFile);
+    }
+
+    public FormManager getFormManager() {
+        return formManager;
     }
 
     public Config getArenasConfig() {

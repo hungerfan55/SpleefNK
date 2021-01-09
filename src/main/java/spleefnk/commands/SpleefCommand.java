@@ -43,7 +43,7 @@ public class SpleefCommand extends Command {
                 } else {
                     String arenaName = args[1];
                     Arena arena = new Arena(arenaName, gameManager);
-                    gameManager.getSetupWizardManager().startWizard(player, arena);
+                    gameManager.getSetupWizardManager().startWizard(player, arena, false);
                     break;
                 }
             case "join":
@@ -153,12 +153,52 @@ public class SpleefCommand extends Command {
                     break;
                 }
                 sendHelp(player);
+                break;
+            case "remove":
+                if (!player.hasPermission("spleefNK.admin")) {
+                    player.sendMessage("§cYou dont have permission to this command");
+                    break;
+                }
+                if (args.length == 1) {
+                    player.sendMessage("Please do /spleef remove <arena name> to remove a arena");
+                    break;
+                } else if (args.length > 2) {
+                    player.sendMessage("Please do /spleef remove <arena name> to disable a arena");
+                    break;
+                } else {
+                    String arenaName = args[1];
+                    Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    if (arena.isEnabled()) {
+                        player.sendMessage("Please disable the arena first with /spleef disable " + arenaName);
+                        break;
+                    }
+                    player.sendMessage("Arena removed");
+                    gameManager.getArenaManager().removeArena(arena);
+                    break;
+                }
+            case "edit":
+                if (!player.hasPermission("spleefNK.admin")) {
+                    player.sendMessage("§cYou dont have permission to this command");
+                    break;
+                }
+                if (args.length == 1) {
+                    player.sendMessage("Please do /spleef edit <arena name>");
+                    break;
+                } else if (args.length > 2) {
+                    player.sendMessage("Please do /spleef edit <arena name>");
+                    break;
+                } else {
+                    String arenaName = args[1];
+                    Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
+                    gameManager.getSetupWizardManager().startWizard(player, arena, true);
+                    break;
+                }
         }
-
         return false;
     }
 
     private void sendHelp(Player player) {
-        player.sendMessage("§2----Spleef-----\n/spleef list : List all arenas\n/spleef enable/disable : Disable or enable an arena\n/spleef join : join an arena\n/spleef create : create an arena\n/spleef bowspleef : Do bow spleef on or off for a arena");
+        player.sendMessage("§2----Spleef-----\n/spleef list : List all arenas\n/spleef enable/disable : Disable or enable an arena\n/spleef join : join an arena\n/spleef create : create an arena\n/spleef bowspleef : Do bow spleef on or off for a arena\n/spleef remove : remove an arena\n/spleef edit : edit an arena");
     }
 }
+

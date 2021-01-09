@@ -1,6 +1,7 @@
 package spleefnk.managers;
 
 import cn.nukkit.Player;
+import cn.nukkit.utils.Config;
 import spleefnk.arena.Arena;
 
 import java.util.ArrayList;
@@ -33,6 +34,10 @@ public class ArenaManager {
 
     public void removeArena(Arena arena) {
         this.arenas.removeIf(existing -> existing.equals(arena));
+        Config cfg = gameManager.getArenasConfig();
+
+        cfg.remove(arena.getName());
+        gameManager.saveConfig();
     }
 
     public Arena getArenaByName(String arenaName) {
