@@ -8,6 +8,8 @@ import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.level.Location;
 import cn.nukkit.utils.Config;
+import spleefnk.Language;
+import spleefnk.SpleefPlugin;
 import spleefnk.arena.Arena;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class SetupWizardManager implements Listener {
 
     private Map<Player, Arena> inWizard = new HashMap<>();
 
+    private Language language;
+
     private boolean edit;
 
     private final String SET_SPAWN_LOCATION_ITEM_NAME = "§aSet the spawn location §7(long / right click)";
@@ -30,6 +34,7 @@ public class SetupWizardManager implements Listener {
 
     public SetupWizardManager(GameManager gameManager) {
         this.gameManager = gameManager;
+        language = SpleefPlugin.getInstance().getLanguage();
     }
 
     public void startWizard(Player player, Arena arena, boolean edit) {
@@ -37,7 +42,7 @@ public class SetupWizardManager implements Listener {
         inWizard.put(player, arena);
 
         if (arena == null) {
-            player.sendMessage("§4Something went wrong...");
+            player.sendMessage(this.language.translateString("somethingWentWrong"));
             return;
         }
         player.setGamemode(1);
@@ -50,7 +55,7 @@ public class SetupWizardManager implements Listener {
         String name = arena.getName();
         gameManager.getArenasConfig().set(name + ".minPlayers", minPlayers);
         gameManager.getArenasConfig().set(name + ".maxPlayers", maxPlayers);
-        player.sendMessage("§aMinimum and maximum players have been set");
+        player.sendMessage(this.language.translateString("minMaxHasBeenSet"));
     }
 
     public void giveItems(Player player) {
@@ -97,7 +102,7 @@ public class SetupWizardManager implements Listener {
 
         if (itemName.equalsIgnoreCase(SET_SPAWN_LOCATION_ITEM_NAME)) {
 
-            player.sendMessage("§2The first spawn has been set");
+            player.sendMessage(this.language.translateString("spawnSet"));
             event.setCancelled(true);
             Location location = player.getLocation();
             String arenaName = arena.getName();
@@ -127,19 +132,19 @@ public class SetupWizardManager implements Listener {
             return;
         } else if (itemName.equalsIgnoreCase(SAVE_ARENA_ITEM_NAME)) {
             if (edit) {
-                player.sendMessage("§2The arena has been edited...");
+                player.sendMessage(this.language.translateString("arenaEdited"));
                 event.setCancelled(true);
                 endWizard(player);
                 return;
             }
-            player.sendMessage("§2The arena has been created...");
+            player.sendMessage(this.language.translateString("arenaCreated"));
             event.setCancelled(true);
             endWizard(player);
             gameManager.getArenaManager().addArena(arena);
             return;
 
         } else if (itemName.equalsIgnoreCase(CANCEL_SETUP_WIZARD_ITEM_NAME)) {
-            player.sendMessage("§4Setup wizard has been canceled!");
+            player.sendMessage(this.language.translateString("setupWizardCanceld"));
             event.setCancelled(true);
             endWizard(player);
             return;
