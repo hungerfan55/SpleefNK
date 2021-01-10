@@ -4,7 +4,6 @@ import cn.nukkit.command.SimpleCommandMap;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
-import spleefnk.arena.Arena;
 import spleefnk.commands.SpleefCommand;
 import spleefnk.events.*;
 import spleefnk.managers.GameManager;
@@ -13,16 +12,23 @@ import java.io.File;
 
 public class SpleefPlugin extends PluginBase {
 
+    private static SpleefPlugin spleefPlugin;
     private GameManager gameManager;
     private Language language;
 
+    public static SpleefPlugin getInstance() {
+        return spleefPlugin;
+    }
+
     @Override
     public void onLoad() {
+        spleefPlugin = this;
         File file = new File(this.getDataFolder() + "/Language");
 
         if (!file.exists() && !file.mkdirs()) {
             this.getLogger().error("Language Folder initialization failed");
         }
+        this.loadLanguage();
     }
 
     @Override
@@ -34,19 +40,21 @@ public class SpleefPlugin extends PluginBase {
         gameManager.getArenaManager().loadArenas();
         registerCommands();
         registerEvents();
-        loadLanguage();
     }
 
     private void loadLanguage() {
-        saveResource("Language/en_US.yml", false);
-        String lang = getConfig().getString("language", "en_US");
-        File langFile = new File(getDataFolder() + "/Language/" + lang + "yml");
+        this.saveResource("Language/en_US.yml", false);
+        this.saveResource("Language/en_US.yml", "Language/cache/new_en_US.yml", true);
+        String lang = this.getConfig().getString("language", "en_US");
+        File langFile = new File(this.getDataFolder() + "/Language/" + lang + ".yml");
         if (langFile.exists()) {
-            getLogger().info("§aLanguage: " + lang + "loaded!");
-            this.language = new Language(new Config(langFile, 2));
+            this.getLogger().info("§aLanguage: " + lang + "loaded!");
         } else {
-            this.language = new Language(new Config());
+            this.getLogger().error("§cLanguage: " + lang + "does not exist! Load default language!");
+            langFile = new File(getDataFolder() + "/Language/en_US.yml");
         }
+        this.language = new Language(new Config(langFile, Config.YAML));
+        this.language.update(new Config(this.getDataFolder() + "/Language/cache/new_en_US.yml"));
     }
 
     @Override
@@ -75,4 +83,9 @@ public class SpleefPlugin extends PluginBase {
         pm.registerEvents(new ProjectileHitEvent(gameManager.getArenaManager()), this);
         pm.registerEvents(new FormListener(gameManager), this);
     }
+
+    public Language getLanguage() {
+        return this.language;
+    }
+
 }

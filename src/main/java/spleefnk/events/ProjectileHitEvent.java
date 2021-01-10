@@ -11,11 +11,9 @@ import cn.nukkit.entity.projectile.EntitySnowball;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
 import cn.nukkit.math.Vector3;
-import org.graalvm.compiler.nodes.gc.G1ArrayRangePostWriteBarrier;
 import spleefnk.arena.Arena;
 import spleefnk.arena.GameState;
 import spleefnk.managers.ArenaManager;
-import spleefnk.managers.GameManager;
 
 public class ProjectileHitEvent implements Listener {
 

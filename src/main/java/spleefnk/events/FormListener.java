@@ -8,17 +8,20 @@ import cn.nukkit.form.window.FormWindowCustom;
 import cn.nukkit.form.window.FormWindowModal;
 import cn.nukkit.form.window.FormWindowSimple;
 import cn.nukkit.utils.Config;
+import spleefnk.Language;
 import spleefnk.arena.Arena;
 import spleefnk.managers.GameManager;
 
 public class FormListener implements Listener {
 
     private GameManager gameManager;
+    private Language language;
 
     private Config cfg;
 
     public FormListener(GameManager gameManager) {
         this.gameManager = gameManager;
+        this.language = gameManager.getPlugin().getLanguage();
     }
 
     @EventHandler
@@ -37,10 +40,10 @@ public class FormListener implements Listener {
             int minPlayers = Integer.parseInt(fw.getResponse().getInputResponse(0));
             int maxPlayers = Integer.parseInt(fw.getResponse().getInputResponse(1));
             if (minPlayers < 2) {
-                event.getPlayer().sendMessage("§cMinumum players needs to be more than 2!");
+                event.getPlayer().sendMessage(this.language.translateString("minPlayersMoreThan2"));
                 gameManager.getSetupWizardManager().endWizard(event.getPlayer());
             } else if (maxPlayers < 2) {
-                event.getPlayer().sendMessage("§Maximum players needs to be more than 2!");
+                event.getPlayer().sendMessage(this.language.translateString("maxPlayersMoreThan2"));
                 gameManager.getSetupWizardManager().endWizard(event.getPlayer());
             } else {
                 gameManager.getSetupWizardManager().writePlayers(minPlayers, maxPlayers, event.getPlayer());
@@ -57,12 +60,12 @@ public class FormListener implements Listener {
                 case "enable arenas":
                     gameManager.getArenasConfig().set(arena.getName() + ".enabled", true);
                     gameManager.saveConfig();
-                    event.getPlayer().sendMessage("§aArena enabled");
+                    event.getPlayer().sendMessage(this.language.translateString("arenaEnabled"));
                     break;
                 case "disable arenas":
                     gameManager.getArenasConfig().set(arena.getName() + ".enabled", false);
                     gameManager.saveConfig();
-                    event.getPlayer().sendMessage("§aArena disabled");
+                    event.getPlayer().sendMessage(this.language.translateString("arenaDisabled"));
                     break;
             }
         }
