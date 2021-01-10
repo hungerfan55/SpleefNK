@@ -11,6 +11,8 @@ import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.utils.Config;
+import spleefnk.Language;
+import spleefnk.SpleefPlugin;
 import spleefnk.Tasks.ActiveGameTask;
 import spleefnk.Tasks.LobbyCountDownTask;
 import spleefnk.managers.GameManager;
@@ -34,6 +36,7 @@ public class Arena {
     private int maxPlayers;
 
     private GameManager gameManager;
+    private Language language;
 
     private Config cfg;
 
@@ -46,9 +49,10 @@ public class Arena {
     public Arena(String name, GameManager gameManager) {
 
         this.gameManager = gameManager;
+        this.language = gameManager.getPlugin().getLanguage();
 
         cfg = gameManager.getArenasConfig();
-        gameManager.getArenasConfig();
+        //gameManager.getArenasConfig(); //TODO remove this line?
 
         location = new Location(cfg.getDouble(name + ".spawnLocation.x"), cfg.getDouble(name + ".spawnLocation.y"), cfg.getDouble(name + ".spawnLocation.z"), cfg.getDouble(name + ".spawnLocation.yaw"), cfg.getDouble(name + ".spawnLocation.pitch"), gameManager.getPlugin().getServer().getLevelByName(cfg.getString(name + ".spawnLocation.worldName")));
         this.enabled = cfg.getBoolean(name + ".enabled");
@@ -82,29 +86,29 @@ public class Arena {
 
     public void addPlayer(Player player) {
         if (isPlaying(player)) {
-            player.sendMessage("§4Your already in a game!");
+            player.sendMessage(this.language.translateString("alreadyInGame"));
             return;
         }
 
         if (!gameManager.getArenasConfig().getBoolean(this.getName() + ".enabled")) {
-            player.sendMessage("§4This arena is not enabled!");
+            player.sendMessage(this.language.translateString("arenaNotEnabled"));
             return;
         }
 
         if (players.size() >= getMaxPlayers()) {
-            player.sendMessage("§4This arena is full!");
+            player.sendMessage(this.language.translateString("arenaFull"));
             return;
         }
 
         if (this.getGameState() == GameState.ACTIVE || this.getGameState() == GameState.RESTARTING) {
-            player.sendMessage("§4This arena is already active!");
+            player.sendMessage(this.language.translateString("arenaInGame"));
             return;
         }
         players.add(player);
         player.setGamemode(0);
         player.setHealth(20);
         player.getFoodData().setLevel(player.getFoodData().getMaxLevel());
-        this.sendMessage(player.getName() + "§6 has joined!");
+        this.sendMessage(this.language.translateString("playerJoin").replace("%player%", player.getName()));
         player.teleport(getSpawnLocation());
         giveItems(player);
         checkLobby();
@@ -195,7 +199,7 @@ public class Arena {
                 break;
             case ACTIVE:
                 lobbyCountDownTask.cancel();
-                sendMessage("§6The game has started");
+                sendMessage(this.language.translateString("gameStart"));
                 activeGameTask = new ActiveGameTask(this, gameManager);
                 gameManager.getPlugin().getServer().getScheduler().scheduleRepeatingTask(gameManager.getPlugin(), activeGameTask, 8);
                 break;

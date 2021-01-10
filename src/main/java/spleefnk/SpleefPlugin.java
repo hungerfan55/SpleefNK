@@ -4,7 +4,6 @@ import cn.nukkit.command.SimpleCommandMap;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.plugin.PluginManager;
 import cn.nukkit.utils.Config;
-import spleefnk.arena.Arena;
 import spleefnk.commands.SpleefCommand;
 import spleefnk.events.*;
 import spleefnk.managers.GameManager;
@@ -13,16 +12,23 @@ import java.io.File;
 
 public class SpleefPlugin extends PluginBase {
 
+    private static SpleefPlugin spleefPlugin;
     private GameManager gameManager;
     private Language language;
 
+    public static SpleefPlugin getInstance() {
+        return spleefPlugin;
+    }
+
     @Override
     public void onLoad() {
+        spleefPlugin = this;
         File file = new File(this.getDataFolder() + "/Language");
 
         if (!file.exists() && !file.mkdirs()) {
             this.getLogger().error("Language Folder initialization failed");
         }
+        this.loadLanguage();
     }
 
     @Override
@@ -34,7 +40,6 @@ public class SpleefPlugin extends PluginBase {
         gameManager.getArenaManager().loadArenas();
         registerCommands();
         registerEvents();
-        loadLanguage();
     }
 
     private void loadLanguage() {
@@ -78,4 +83,9 @@ public class SpleefPlugin extends PluginBase {
         pm.registerEvents(new ProjectileHitEvent(gameManager.getArenaManager()), this);
         pm.registerEvents(new FormListener(gameManager), this);
     }
+
+    public Language getLanguage() {
+        return this.language;
+    }
+
 }
