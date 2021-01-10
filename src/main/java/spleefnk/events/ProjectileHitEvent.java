@@ -40,11 +40,16 @@ public class ProjectileHitEvent implements Listener {
                                 if (arrow.getLevel().getBlockIdAt(arrow.getFloorX(), arrow.getFloorY() - 1, arrow.getFloorZ()) == BlockID.SNOW_BLOCK) {
                                     if (arrow instanceof EntityArrow){
                                         arrow.getLevel().setBlock(new Vector3(arrow.getX(), arrow.getLevelBlock().down().getY(), arrow.getZ()), Block.get(Block.AIR));
+                                        arena.getBrokenBlocksList().add(arrow.getLevel().getBlock(new Vector3(arrow.getX(), arrow.getLevelBlock().down().getY(), arrow.getZ())).getLocation());
                                         arrow.getLevel().setBlock(new Vector3(arrow.getX(), arrow.getLevelBlock().down().getY(), arrow.getZ() - 1), Block.get(Block.AIR));
+                                        arena.getBrokenBlocksList().add(arrow.getLevel().getBlock(new Vector3(arrow.getX(), arrow.getLevelBlock().down().getY(), arrow.getZ()-1)).getLocation());
                                         arrow.getLevel().setBlock(new Vector3(arrow.getX() - 1, arrow.getLevelBlock().down().getY(), arrow.getZ()), Block.get(Block.AIR));
+                                        arena.getBrokenBlocksList().add(arrow.getLevel().getBlock(new Vector3(arrow.getX() -1, arrow.getLevelBlock().down().getY(), arrow.getZ())).getLocation());
                                         arrow.getLevel().setBlock(new Vector3(arrow.getX() - 1, arrow.getLevelBlock().down().getY(), arrow.getZ() - 1), Block.get(Block.AIR));
+                                        arena.getBrokenBlocksList().add(arrow.getLevel().getBlock(new Vector3(arrow.getX() -1, arrow.getLevelBlock().down().getY(), arrow.getZ()-1)).getLocation());
                                     } else {
                                         arrow.getLevel().setBlock(new Vector3(arrow.getX(), arrow.getLevelBlock().down().getY(), arrow.getZ()), Block.get(Block.AIR));
+                                        arena.getBrokenBlocksList().add(arrow.getLevel().getBlock(new Vector3(arrow.getX(), arrow.getLevelBlock().down().getY(), arrow.getZ())).getLocation());
                                     }
                                 }
                             }

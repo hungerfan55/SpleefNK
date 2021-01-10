@@ -1,0 +1,46 @@
+alreadyInGame: "§4Your already in a game!"
+arenaNotEnabled: "§4This arena is not enabled!"
+arenaFull: "§4This arena is full!"
+arenaInGame: "§4This arena is already active!"
+playerJoin: "%player% &6has joined!"
+gameStart: "§6The game has started"
+cmdOnlyPlayer: "Only use these commands as a player"
+noPerm: "§cYou dont have permission to this command"
+createCMDusage: "Please do /spleef create <arena name>"
+listCMDusage: "Please do /spleef list for a list of all arenas"
+joinCMDusage: "Please do /spleef join <arena name> to join a arena"
+arenaDoesntExsist: "§cThis arena doesnt exsist... do /spleef list to see a list of arenas"
+bowSpleefCMDusage: "Please do /spleef bowspleef <arena name> to enable bowspleef for a arena"
+bowSpleefDisabled: "Bow spleef is now disabled for arena : %arenaName%"
+bowSpleefEnabled: "Bow spleef is now enabled for arena : %arenaName%"
+enbableCMDusage: "Please do /spleef enable <arena name> to enable a arena"
+arenaEnabled: "Arena enabled"
+disableCMDusage: "Please do /spleef disable <arena name> to disable a arena"
+arenaDisabled: "Arena disabled"
+noArenasYet: "§cNo arenas have been created yet!"
+listCMD: "§a- %arenaName%"
+removeCMDusage: "Please do /spleef remove <arena name> to remove a arena"
+disableFirst: "Please disable the arena first with /spleef disable %arenaName%"
+arenaRemoved: "Arena removed"
+editCMDusage: "Please do /spleef edit <arena name>"
+#\n is a new line
+helpMessage: "§2----Spleef-----
+              /spleef list : List all arenas
+              /spleef enable/disable : Disable or enable an arena
+              /spleef join : join an arena
+              /spleef create : create an arena
+              /spleef bowspleef : Do bow spleef on or off for a arena
+              /spleef remove : remove an arena
+              /spleef edit : edit an arena"
+minPlayersMoreThan2: "§cMinumum players needs to be more than 2!"
+maxPlayersMoreThan2: "§Maximum players needs to be more than 2!"
+somethingWentWrong: "§4Something went wrong..."
+minMaxHasBeenSet: "§aMinimum and maximum players have been set"
+spawnSet: "§2The first spawn has been set"
+arenaEdited: "§2The arena has been edited..."
+arenaCreated: "§2The arena has been created..."
+setupWizardCanceld: "§4Setup wizard has been canceled!"
+someoneWon: "§6Someone won a game!"
+playerWon: "%playerName% won the game!"
+countDownCanceld: "§4The countdown has been canceled"
+secondsTillStart: "§6Seconds till start : %time%"

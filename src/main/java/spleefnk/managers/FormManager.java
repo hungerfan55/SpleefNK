@@ -5,6 +5,7 @@ import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.form.element.ElementButtonImageData;
 import cn.nukkit.form.element.ElementInput;
 import cn.nukkit.form.window.FormWindowCustom;
+import cn.nukkit.form.window.FormWindowModal;
 import cn.nukkit.form.window.FormWindowSimple;
 import spleefnk.arena.Arena;
 import spleefnk.arena.GameState;
@@ -34,5 +35,25 @@ public class FormManager {
             }
         }
         player.showFormWindow(fw);
+    }
+
+    public void sendEnableForm(Player player) {
+        FormWindowSimple fw = new FormWindowSimple("enable arenas", "enable/disable arenas");
+        for (Arena arena : gameManager.getArenaManager().getArenas()) {
+            if (!gameManager.getArenasConfig().getBoolean(arena.getName() + ".enabled")) {
+                fw.addButton(new ElementButton("§4" + arena.getName(), new ElementButtonImageData("path", "textures/ui/redX1")));
+            }
+            player.showFormWindow(fw);
+        }
+    }
+
+    public void sendDisableForm(Player player) {
+        FormWindowSimple fw = new FormWindowSimple("disable arenas", "enable/disable arenas");
+        for (Arena arena : gameManager.getArenaManager().getArenas()) {
+            if (gameManager.getArenasConfig().getBoolean(arena.getName() + ".enabled")) {
+                fw.addButton(new ElementButton("§4" + arena.getName(), new ElementButtonImageData("path", "textures/ui/check")));
+            }
+            player.showFormWindow(fw);
+        }
     }
 }

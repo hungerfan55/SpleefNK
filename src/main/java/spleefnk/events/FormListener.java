@@ -5,6 +5,7 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerFormRespondedEvent;
 import cn.nukkit.form.response.FormResponse;
 import cn.nukkit.form.window.FormWindowCustom;
+import cn.nukkit.form.window.FormWindowModal;
 import cn.nukkit.form.window.FormWindowSimple;
 import cn.nukkit.utils.Config;
 import spleefnk.arena.Arena;
@@ -23,6 +24,7 @@ public class FormListener implements Listener {
     @EventHandler
     public void onFormReceive(PlayerFormRespondedEvent event) {
 
+        Arena arena;
 
         if (event.getWindow() instanceof FormWindowCustom) {
             FormWindowCustom fw = (FormWindowCustom) event.getWindow();
@@ -45,13 +47,26 @@ public class FormListener implements Listener {
             }
         } else if (event.getWindow() instanceof FormWindowSimple) {
             FormWindowSimple fw = (FormWindowSimple) event.getWindow();
-            if (!fw.getTitle().equals("Join arena")) return;
             if (fw.getResponse() == null) return;
             StringBuilder sb = new StringBuilder(fw.getResponse().getClickedButton().getText());
-            Arena arena = gameManager.getArenaManager().getArenaByName(sb.delete(0, 2).toString());
-
-            arena.addPlayer(event.getPlayer());
+            arena = gameManager.getArenaManager().getArenaByName(sb.delete(0, 2).toString());
+            switch (fw.getTitle()) {
+                case "Join arena":
+                    arena.addPlayer(event.getPlayer());
+                    break;
+                case "enable arenas":
+                    gameManager.getArenasConfig().set(arena.getName() + ".enabled", true);
+                    gameManager.saveConfig();
+                    event.getPlayer().sendMessage("§aArena enabled");
+                    break;
+                case "disable arenas":
+                    gameManager.getArenasConfig().set(arena.getName() + ".enabled", false);
+                    gameManager.saveConfig();
+                    event.getPlayer().sendMessage("§aArena disabled");
+                    break;
+            }
         }
-
     }
 }
+
+

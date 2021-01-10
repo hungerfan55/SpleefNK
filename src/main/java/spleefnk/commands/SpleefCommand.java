@@ -104,8 +104,7 @@ public class SpleefCommand extends Command {
                     break;
                 }
                 if (args.length == 1) {
-                    player.sendMessage("Please do /spleef list for a list of all arenas");
-                    player.sendMessage("Please do /spleef enable <arena name> to join a arena");
+                    gameManager.getFormManager().sendEnableForm(player);
                     break;
                 } else if (args.length > 2) {
                     player.sendMessage("Please do /spleef list for a list of all arenas");
@@ -128,8 +127,7 @@ public class SpleefCommand extends Command {
                     break;
                 }
                 if (args.length == 1) {
-                    player.sendMessage("Please do /spleef list for a list of all arenas");
-                    player.sendMessage("Please do /spleef disable <arena name> to disable a arena");
+                    gameManager.getFormManager().sendDisableForm(player);
                     break;
                 } else if (args.length > 2) {
                     player.sendMessage("Please do /spleef list for a list of all arenas");
