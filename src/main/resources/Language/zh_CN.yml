@@ -48,3 +48,6 @@ wizardFormTitle: "设置最少和最多玩家"
 joinFormTitle: "选择要加入的游戏房间"
 enableFormTitle: "选择要启用的游戏房间"
 disableFormTitle: "选择要卸载的游戏房间"
+#everything below here is google translated
+notInGame: "你不在游戏中"
+leaveCMDusage: "请做"

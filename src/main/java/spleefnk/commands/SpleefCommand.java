@@ -209,13 +209,29 @@ public class SpleefCommand extends Command {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     if (arena == null){
-                        //
                         player.sendMessage(this.language.translateString("arenaDoesntExsist"));
                         break;
                     }
                     gameManager.getSetupWizardManager().startWizard(player, arena, true);
                 }
+            case "leave":
+                if (!player.hasPermission("spleefNK.user")) {
+                    player.sendMessage(this.language.translateString("noPerm"));
+                    break;
+                }
+
+                if (args.length == 2) {
+                    Arena arena = gameManager.getArenaManager().arenaForPlayer(player);
+                    if (arena != null) {
+                        arena.removePlayer(player);
+                    } else {
+                        player.sendMessage(language.translateString("notInGame"));
+                    }
+                } else {
+                    player.sendMessage(language.translateString("leaveCMDusage"));
+                }
                 break;
+
         }
         return false;
     }
