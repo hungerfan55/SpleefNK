@@ -7,4 +7,4 @@ permissions:
   spleefNK.admin:
     default: op
   spleefNK.user:
-    default: op
+    default: true
