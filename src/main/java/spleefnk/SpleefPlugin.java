@@ -43,8 +43,9 @@ public class SpleefPlugin extends PluginBase {
     }
 
     private void loadLanguage() {
-        this.saveResource("Language/en_US.yml", false);
         this.saveResource("Language/en_US.yml", "Language/cache/new_en_US.yml", true);
+        this.saveResource("Language/en_US.yml");
+        this.saveResource("Language/zh_CN.yml");
         String lang = this.getConfig().getString("language", "en_US");
         File langFile = new File(this.getDataFolder() + "/Language/" + lang + ".yml");
         if (langFile.exists()) {
