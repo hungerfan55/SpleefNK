@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import spleefnk.Language;
-import spleefnk.SpleefPlugin;
 import spleefnk.arena.Arena;
 import spleefnk.managers.GameManager;
 
@@ -158,10 +157,12 @@ public class SpleefCommand extends Command {
                 if (gameManager.getArenaManager().getArenas().isEmpty()) {
                     player.sendMessage(this.language.translateString("noArenasYet"));
                 }
+                StringBuilder stringBuffer = new StringBuilder();
                 for (Arena arena : gameManager.getArenaManager().getArenas()) {
-                    player.sendMessage(this.language.translateString("arenaDoesntExsist")
-                            .replace("%arenaName%", arena.getName()));
+                    stringBuffer.append(arena.getName()).append(" ");
                 }
+                player.sendMessage(this.language.translateString("listCMD")
+                        .replace("%arenaName%", stringBuffer.toString()));
                 break;
             case "help":
                 if (!player.hasPermission("spleefNK.user")) {
