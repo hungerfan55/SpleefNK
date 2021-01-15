@@ -31,10 +31,10 @@ public class FormListener implements Listener {
 
         if (event.getWindow() instanceof FormWindowCustom) {
             FormWindowCustom fw = (FormWindowCustom) event.getWindow();
-            if (!(fw.getTitle().equals("Set min and max players"))) return;
+            if (!(fw.getTitle().equals(this.language.translateString("wizardFormTitle")))) return;
             if (fw.getResponse().getInputResponse(0) == null) {
                 gameManager.getSetupWizardManager().endWizard(event.getPlayer());
-                event.getPlayer().sendMessage("§4Arena creation canceled");
+                event.getPlayer().sendMessage(this.language.translateString("setupWizardCanceld"));
                 return;
             }
             int minPlayers = Integer.parseInt(fw.getResponse().getInputResponse(0));
@@ -53,20 +53,18 @@ public class FormListener implements Listener {
             if (fw.getResponse() == null) return;
             StringBuilder sb = new StringBuilder(fw.getResponse().getClickedButton().getText());
             arena = gameManager.getArenaManager().getArenaByName(sb.delete(0, 2).toString());
-            switch (fw.getTitle()) {
-                case "Join arena":
-                    arena.addPlayer(event.getPlayer());
-                    break;
-                case "enable arenas":
-                    gameManager.getArenasConfig().set(arena.getName() + ".enabled", true);
-                    gameManager.saveConfig();
-                    event.getPlayer().sendMessage(this.language.translateString("arenaEnabled"));
-                    break;
-                case "disable arenas":
-                    gameManager.getArenasConfig().set(arena.getName() + ".enabled", false);
-                    gameManager.saveConfig();
-                    event.getPlayer().sendMessage(this.language.translateString("arenaDisabled"));
-                    break;
+
+            if (fw.getTitle().equals(this.language.translateString("joinFormTitle"))) {
+                arena.addPlayer(event.getPlayer());
+            } else if (fw.getTitle().equals(this.language.translateString("disableFormTitle"))){
+                gameManager.getArenasConfig().set(arena.getName() + ".enabled", false);
+                gameManager.saveConfig();
+                event.getPlayer().sendMessage(this.language.translateString("arenaDisabled"));
+            } else if (fw.getTitle().equals(this.language.translateString("enableFormTitle"))){
+                gameManager.getArenasConfig().set(arena.getName() + ".enabled", true);
+                gameManager.saveConfig();
+                event.getPlayer().sendMessage(this.language.translateString("arenaEnabled"));
+
             }
         }
     }

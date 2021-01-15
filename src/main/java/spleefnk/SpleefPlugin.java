@@ -43,14 +43,15 @@ public class SpleefPlugin extends PluginBase {
     }
 
     private void loadLanguage() {
-        this.saveResource("Language/en_US.yml", false);
         this.saveResource("Language/en_US.yml", "Language/cache/new_en_US.yml", true);
+        this.saveResource("Language/en_US.yml");
+        this.saveResource("Language/zh_CN.yml");
         String lang = this.getConfig().getString("language", "en_US");
         File langFile = new File(this.getDataFolder() + "/Language/" + lang + ".yml");
         if (langFile.exists()) {
-            this.getLogger().info("§aLanguage: " + lang + "loaded!");
+            this.getLogger().info("§aLanguage: " + lang + " loaded!");
         } else {
-            this.getLogger().error("§cLanguage: " + lang + "does not exist! Load default language!");
+            this.getLogger().error("§cLanguage: " + lang + " does not exist! Load default language!");
             langFile = new File(getDataFolder() + "/Language/en_US.yml");
         }
         this.language = new Language(new Config(langFile, Config.YAML));

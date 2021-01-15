@@ -52,7 +52,6 @@ public class Arena {
         this.language = gameManager.getPlugin().getLanguage();
 
         cfg = gameManager.getArenasConfig();
-        //gameManager.getArenasConfig(); //TODO remove this line?
 
         location = new Location(cfg.getDouble(name + ".spawnLocation.x"), cfg.getDouble(name + ".spawnLocation.y"), cfg.getDouble(name + ".spawnLocation.z"), cfg.getDouble(name + ".spawnLocation.yaw"), cfg.getDouble(name + ".spawnLocation.pitch"), gameManager.getPlugin().getServer().getLevelByName(cfg.getString(name + ".spawnLocation.worldName")));
         this.enabled = cfg.getBoolean(name + ".enabled");

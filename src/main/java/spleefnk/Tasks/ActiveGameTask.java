@@ -24,7 +24,7 @@ public class ActiveGameTask extends PluginTask<SpleefPlugin> {
 
     @Override
     public void onRun(int i) {
-        if (arena.getPlayers().size() <=0) {
+        if (arena.getPlayers().size() <= 1) {
             if (arena.getPlayers().isEmpty()) {
                 arena.sendMessage(this.language.translateString("someoneWon"));
             } else {

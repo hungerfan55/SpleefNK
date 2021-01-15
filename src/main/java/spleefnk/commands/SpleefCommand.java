@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import spleefnk.Language;
-import spleefnk.SpleefPlugin;
 import spleefnk.arena.Arena;
 import spleefnk.managers.GameManager;
 
@@ -83,15 +82,13 @@ public class SpleefCommand extends Command {
                     break;
                 } else if (args.length > 2) {
                     player.sendMessage(this.language.translateString("listCMDusage"));
-                    //TODO
-                    player.sendMessage("Please do /spleef bowspleef <arena name> to join a arena");
+                    player.sendMessage(this.language.translateString("bowSpleefCMDusage"));
                     break;
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     if (arena == null){
-                        //TODO
-                        player.sendMessage("That arena doesn't exist");
+                        player.sendMessage(this.language.translateString("arenaDoesntExsist"));
                         break;
                     }
                     if (gameManager.getArenasConfig().getBoolean(arenaName + ".bowSpleef")) {
@@ -116,15 +113,13 @@ public class SpleefCommand extends Command {
                     break;
                 } else if (args.length > 2) {
                     player.sendMessage(this.language.translateString("listCMDusage"));
-                    //TODO
-                    player.sendMessage("Please do /spleef enable <arena name> to join a arena");
+                    player.sendMessage(this.language.translateString("enbableCMDusage"));
                     break;
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     if (arena == null){
-                        //TODO
-                        player.sendMessage("That arena doesn't exist");
+                        player.sendMessage(this.language.translateString("arenaDoesntExsist"));
                         break;
                     }
                     player.sendMessage(this.language.translateString("arenaEnabled"));
@@ -147,7 +142,7 @@ public class SpleefCommand extends Command {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     if (arena == null){
-                        player.sendMessage("That arena doesn't exist");
+                        player.sendMessage(this.language.translateString("arenaDoesntExsist"));
                         break;
                     }
                     player.sendMessage(this.language.translateString("arenaDisabled"));
@@ -162,9 +157,12 @@ public class SpleefCommand extends Command {
                 if (gameManager.getArenaManager().getArenas().isEmpty()) {
                     player.sendMessage(this.language.translateString("noArenasYet"));
                 }
+                StringBuilder stringBuffer = new StringBuilder();
                 for (Arena arena : gameManager.getArenaManager().getArenas()) {
-                    player.sendMessage("§a- " + arena.getName());
+                    stringBuffer.append(arena.getName()).append(" ");
                 }
+                player.sendMessage(this.language.translateString("listCMD")
+                        .replace("%arenaName%", stringBuffer.toString()));
                 break;
             case "help":
                 if (!player.hasPermission("spleefNK.user")) {
@@ -182,15 +180,13 @@ public class SpleefCommand extends Command {
                     player.sendMessage(this.language.translateString("removeCMDusage"));
                     break;
                 } else if (args.length > 2) {
-                    //TODO
-                    player.sendMessage("Please do /spleef remove <arena name> to disable a arena");
+                    player.sendMessage(language.translateString("removeCMDusage"));
                     break;
                 } else {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     if (arena == null){
-                        //TODO
-                        player.sendMessage("That arena doesn't exist");
+                        player.sendMessage(language.translateString("arenaDoesntExsist"));
                         break;
                     }
                     if (arena.isEnabled()) {
@@ -198,7 +194,7 @@ public class SpleefCommand extends Command {
                                 .replace("%arenaName%", arenaName));
                         break;
                     }
-                    player.sendMessage("Arena removed");
+                    player.sendMessage(language.translateString("arenaRemoved"));
                     gameManager.getArenaManager().removeArena(arena);
                     break;
                 }
@@ -213,20 +209,35 @@ public class SpleefCommand extends Command {
                     String arenaName = args[1];
                     Arena arena = gameManager.getArenaManager().getArenaByName(arenaName);
                     if (arena == null){
-                        //TODD
-                        player.sendMessage("That arena doesn't exist");
+                        player.sendMessage(this.language.translateString("arenaDoesntExsist"));
                         break;
                     }
                     gameManager.getSetupWizardManager().startWizard(player, arena, true);
                 }
+            case "leave":
+                if (!player.hasPermission("spleefNK.user")) {
+                    player.sendMessage(this.language.translateString("noPerm"));
+                    break;
+                }
+
+                if (args.length == 2) {
+                    Arena arena = gameManager.getArenaManager().arenaForPlayer(player);
+                    if (arena != null) {
+                        arena.removePlayer(player);
+                    } else {
+                        player.sendMessage(language.translateString("notInGame"));
+                    }
+                } else {
+                    player.sendMessage(language.translateString("leaveCMDusage"));
+                }
                 break;
+
         }
         return false;
     }
 
     private void sendHelp(Player player) {
         player.sendMessage(this.language.translateString("helpMessage"));
-        //player.sendMessage("§2----Spleef-----\n/spleef list : List all arenas\n/spleef enable/disable : Disable or enable an arena\n/spleef join : join an arena\n/spleef create : create an arena\n/spleef bowspleef : Do bow spleef on or off for a arena\n/spleef remove : remove an arena\n/spleef edit : edit an arena");
     }
 }
 

@@ -1,0 +1,53 @@
+alreadyInGame: "§4您已经在一个游戏房间中了！"
+arenaNotEnabled: "§4这个游戏房间没有启用！"
+arenaFull: "§4这个游戏房间人数已经满了！"
+arenaInGame: "§4这个游戏房间已开始游戏！"
+playerJoin: "%player% §6加入了游戏！"
+gameStart: "§6游戏开始！"
+cmdOnlyPlayer: "请以玩家身份执行命令！"
+noPerm: "§c您没有权限使用这个命令！"
+createCMDusage: "创建游戏房间命令： /spleef create <arena name>"
+listCMDusage: "查看游戏房间列表命令： /spleef list"
+joinCMDusage: "加入房间命令： /spleef join <arena name>"
+arenaDoesntExsist: "§c这个游戏房间不存在... 请使用 /spleef list 查看游戏房间列表"
+bowSpleefCMDusage: "请使用 /spleef bowspleef <arena name> 命令为游戏房间启用或禁用弓箭"
+bowSpleefDisabled: "游戏房间： %arenaName% 已禁用弓箭"
+bowSpleefEnabled: "游戏房间： %arenaName% 已启用弓箭"
+enbableCMDusage: "请使用 /spleef enable <arena name> 命令来启用一个游戏房间"
+arenaEnabled: "游戏房间已启用"
+disableCMDusage: "请使用 /spleef disable <arena name> 命令来卸载一个游戏房间"
+arenaDisabled: "游戏房间已卸载"
+noArenasYet: "§c尚未创建游戏房间！"
+listCMD: "§a- %arenaName%"
+removeCMDusage: "请使用 /spleef remove <arena name> 命令来删除一个游戏房间"
+disableFirst: "请先使用 /spleef disable %arenaName% 命令卸载游戏房间"
+arenaRemoved: "游戏房间已删除"
+editCMDusage: "用法： /spleef edit <arena name>"
+helpMessage: |-
+  §2----Spleef-----
+  /spleef list : 查看游戏房间列表
+  /spleef enable/disable : 启用或卸载游戏房间
+  /spleef join : 加入一个游戏房间
+  /spleef create : 创建一个游戏房间
+  /spleef bowspleef : 为游戏房间启用或禁用弓箭
+  /spleef remove : 删除一个游戏房间
+  /spleef edit : 设置游戏房间
+minPlayersMoreThan2: "§c最少玩家人数应超过2！"
+maxPlayersMoreThan2: "§c最多玩家人数应超过2！"
+somethingWentWrong: "§4出了些问题..."
+minMaxHasBeenSet: "§a最少玩家数量和最多玩家数量限制已设置"
+spawnSet: "§2出生点已设置"
+arenaEdited: "§2游戏房间设置完成！"
+arenaCreated: "§2游戏房间创建完成！"
+setupWizardCanceld: "§4已取消设置游戏房间！"
+someoneWon: "§6有人赢了一场比赛！"
+playerWon: "%playerName% 赢得了这次比赛！"
+countDownCanceld: "§4倒计时已取消"
+secondsTillStart: "§6游戏将在 %time% 秒后开始"
+wizardFormTitle: "设置最少和最多玩家"
+joinFormTitle: "选择要加入的游戏房间"
+enableFormTitle: "选择要启用的游戏房间"
+disableFormTitle: "选择要卸载的游戏房间"
+#everything below here is google translated
+notInGame: "你不在游戏中"
+leaveCMDusage: "请做"
